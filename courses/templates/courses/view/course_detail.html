@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{%load courses_tags%}
+
+{% block title %}
+    {{ course.title }}
+{% endblock %}
+
+{% block body %}
+    {% with subject=course.subject %}
+        <h1>
+            {{ course.title }}
+        </h1>
+        <div class="module">
+            <h2>Overview</h2>
+            <p>
+                <a href="{% url 'subject_courses_list_view' subject.slug %}"> {{ subject.title }}</a>.
+                {{ course.modules.count }} modules.
+                Instructors : {%for instructor in course.instructors.all %}
+                <a href="{% url 'instructor_courses_list_view' instructor.id %}"> {{instructor.get_full_name}} ,</a>
+               {%endfor%}
+            
+            </p>
+            {{ course.overview|linebreaks }}
+        </div>
+       
+        {%if user|is_admin or user|is_course_instructor:course or user|is_enrolled:course %}
+        
+        <button><a href="{%url 'student_course_detail_view' course.id %}">Access Contents</a></button>
+        
+        {%else%}
+        <button><a href="{%url 'course_enroll_view' course.id %}">Enroll Now </a></button>
+        {%endif%}
+        
+        <button><a href="{%url 'comments:create_comment_view' course.slug %}"> Discussion </a></button>
+         
+    {% endwith %}
+{% endblock %}

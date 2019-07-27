@@ -1,0 +1,14 @@
+{%extends 'base.html' %}
+{%block title%}
+   All Notifications
+{%endblock%}
+
+{%block body%}
+    {% for n in notifications%}
+        {{n.user}} {{n.verb}} {{n.read}}
+        <br>
+        <hr>
+    {%empty%}
+        you have not any notifications yet
+    {%endfor%}
+{%endblock%}

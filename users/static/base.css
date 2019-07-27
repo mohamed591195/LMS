@@ -1,0 +1,69 @@
+form {
+    width:40%; 
+    margin:auto; 
+    padding: 0 0 50px 0
+}
+
+.reply_form{
+    width: 70%
+}
+nav{
+    display: block;
+    height: 60px;
+}
+
+ul{
+    list-style: none;
+    position: relative;
+
+}
+
+nav li{
+    float: left;
+    padding: 20px;
+    position: relative;
+}
+
+a:hover {
+    text-decoration: none
+}
+
+button{
+    border-radius: 15px;
+    border-color: aquamarine;
+}
+
+.container .med{
+    text-align: center
+}
+
+span{
+    color: aqua;
+}
+
+.half{
+    width: 50%;
+    float: left
+}
+
+.clear{
+    clear: both;
+}
+
+.options > li{
+    float: left;
+    padding: 20px;
+    position: relative;
+}
+
+h5, h2{
+    text-align: center;
+}
+
+.right{
+    float: right;
+}
+
+.replies{
+    padding-left: 8%
+}

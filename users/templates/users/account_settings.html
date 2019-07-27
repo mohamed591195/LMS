@@ -1,0 +1,19 @@
+{%extends 'base.html' %}
+{%load crispy_forms_tags%}
+{%block body%}
+<form method="POST" action="" enctype="multipart/form-data">
+    {%csrf_token%}
+    {{a_form|crispy}}
+    {{u_form|crispy}}
+    <input type="submit" value="Update Info">
+</form>
+
+<div class="med">
+        email : {{user.email}}
+        <br>
+        username : {{user.username}}
+    <h5>Want to change your password</h5>
+    <button><a href="{%url 'pass_change_view'%}">Click Here</a></button>
+</div>
+
+{%endblock%}

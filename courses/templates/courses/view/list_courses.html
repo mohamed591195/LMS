@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{%block title%}
+    {%if subject %}
+        {{subject}} courses
+    {%else%}
+        All Courses
+    {%endif%}
+{%endblock%}
+
+{%block body%}
+   <h2> {%if subject %} {{subject}} courses {%else%} All Courses {%endif%} </h2>
+   <ul>
+       <li><a href="{%url 'course_list_view'%}">{%if not subject %} All <<< {%else%} All {%endif%}</a></li>
+       {%for sub in subjects%}
+       <li><a href="{%url 'subject_courses_list_view' sub.slug %}">
+            {%if subject == sub %}
+                {{sub}} -> {{sub.total_courses}} course{{sub.total_courses|pluralize}} <<< 
+            {%else%}
+                {{sub}} -> {{sub.total_courses}} course{{sub.total_courses|pluralize}}
+            {%endif%}
+        </a></li>
+       {%endfor%}
+      
+   </ul>
+
+   <h5> courses </h5>
+   {%for course in courses%}
+   {%with subject=course.subject%}
+   <h3> <a href="{%url 'course_detail_view' course.slug %}"> {{course.title}} </a></h3>
+   <a href="{%url 'subject_courses_list_view' subject.slug%}">{{subject}}</a>
+   <br>
+   {{course.total_modules}} total_modules<br>
+   instructors:
+   {%for instructor in course.instructors.all %}
+    <a href="{% url 'instructor_courses_list_view' instructor.id %}"> {{instructor.get_full_name}} ,</a>
+   {%endfor%}
+
+   {%endwith%}
+   <hr>
+   
+
+    {%empty%}
+   <h2>There is no courses yet</h2>
+    {%endfor%}
+{%endblock%}

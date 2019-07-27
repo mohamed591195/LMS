@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ course.title }}
+{% endblock %} 
+{% block body %}
+    <h1>
+        {{ module.title }}
+    </h1>
+    <h4><a class="right" href="{%url 'course_assignments_list_view' course.id%}">Assignments</a></h4>
+    <div class="clear"></div>
+        <h3>Modules</h3>
+        
+        <ul>
+        {% for m in course.modules.all %}
+            <li>
+                <a href="{% url "student_course_module_detail_view" course.id m.id %}">
+                    <span>
+                        Module {{ m.order|add:1 }}
+                    </span>
+                    <br>
+                    {% if m == module %} {{ m.title }} <span> <<< </span>{%else %}{{ m.title }} {% endif %}
+                </a>
+            </li>
+        {% empty %}
+            <li>No modules yet.</li>
+        {% endfor %}
+        </ul> 
+    </div>
+    <div class="module">
+        {% for content in module.contents.all %}
+            {% with item=content.item %}
+                <h2>{{content.order|add:1}}) {{ item.title }}</h2>
+                <div style="text-align:center">{{ item.render }} </div>
+            {% endwith %}
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{%extends 'base.html'%}
+{%load crispy_forms_tags%}
+
+{%block title%}
+    Deleteing {{object.title}}
+{%endblock%}
+
+{%block body%}
+
+<h4> you will delete the course {{object.title}} and all of it's contents </h4>
+<form method="POST" action="">
+    {%csrf_token%}
+    <button type="submit"> Delete </button>
+
+</form>
+{%endblock%}

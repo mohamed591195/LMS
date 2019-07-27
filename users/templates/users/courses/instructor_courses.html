@@ -1,0 +1,27 @@
+{%extends 'base.html' %}
+{%block title%}
+    {{instructor.get_full_name}}
+{%endblock%}
+{% block body %}
+<h1>{{instructor.get_full_name}}</h1>
+
+<h5> courses </h5>
+{%for course in courses%}
+{%with subject=course.subject%}
+<h3> <a href="{%url 'course_detail_view' course.slug %}"> {{course.title}} </a></h3>
+<a href="{%url 'subject_courses_list_view' subject.slug%}">{{subject}}</a>
+<br>
+{{course.modules.count}} total_modules<br>
+instructors:
+{%for instructor in course.instructors.all %}
+<a href="{% url 'instructor_courses_list_view' instructor.id %}"> {{instructor.get_full_name}} ,</a>
+{%endfor%}
+
+{%endwith%}
+<hr>
+
+
+ {%empty%}
+<h2>There is no courses yet</h2>
+ {%endfor%}
+{%endblock%}

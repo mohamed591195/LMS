@@ -1,0 +1,36 @@
+{%extends 'base.html'%}
+{%load courses_tags %}
+{%block title%}
+    {{module}} Contents
+{%endblock%}
+{%block body%}
+    {%with module.course as course%}
+        <h4>Modules of the course<span> {{course.title}} </span></h4>
+        {%for m in course.modules.all %}
+           <p ><a href="{%url 'course_module_contents_view' m.slug %}"> <span>{{m.order|add:1}} </span>:: {%if m == module%} {{m.title}}<span> <<< </span>{%else%}{{m.title}}{%endif%}</a></p>
+        {%empty%}
+            <h5>There is no modules Yet of this course <a href="{% url 'course_modules_create_view' course.id %}">add one</a></h5> 
+        {%endfor%}
+    {%endwith%}
+    <br>
+    <h3>Contents</h3>
+    {% for c in module.contents.all %}
+        {% with item=c.item %}
+            <h5>{{forloop.counter}} : {{item}} ({{item|model_name}})<a href="{%url 'content_update_view' module.id item|model_name  item.id %}">Edit </a></h5>
+            
+        {%endwith%}
+    {%empty%}
+        <br>
+        <h5>There is no content for this module yet</h5>
+    {%endfor%}
+    <div class="clear"></div>
+    <p>add a new content for that module</p>
+    <a href="{%url 'content_create_view' module.id 'text' %}"> | add text</a>
+    <a href="{%url 'content_create_view' module.id 'image' %}"> | add image</a>
+    <a href="{%url 'content_create_view' module.id 'file' %}"> | add file</a>
+    <a href="{%url 'content_create_view' module.id 'video' %}"> | add video</a>
+
+    <h2><span>OR </span></h2>
+    <p><a href="{%url 'course_modules_create_view' module.course.id%}">Add a New Module</a></p>
+
+{%endblock%}

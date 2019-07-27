@@ -1,0 +1,22 @@
+{%extends 'base.html' %}
+{%block title%}
+    {{course.title}} Assignments
+{%endblock%}
+
+{%block body%}
+    {%for a in assignments%}
+        <h3>{{ a.title }}</h3>
+        <p>{{ a.description }}</p>
+
+        {% if a.ifile %}
+       
+        <p><a href="{{a.ifile.url}}">Download Assigment File</a></p>
+        {%endif%}
+
+        <hr>
+
+    {%empty%}
+    <h2>No Assignments yet</h2>
+        
+    {%endfor%}
+{%endblock%}

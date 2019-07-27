@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{%load crispy_forms_tags%}
+{%block title%}
+    {%if object%}
+        Edit  {{object.title}}
+    {%else%}
+        Create New Content
+    {%endif%}
+{%endblock%}
+
+
+{%block body%}
+   
+
+    <h4>
+        {%if object%}
+            Edit  {{object.title}}
+        {%else%}
+            Create New Content for {{module.title}} module 
+        {%endif%} 
+    </h4>
+    <form method="POST" action="" enctype="multipart/form-data">
+        {%csrf_token%}
+        {{form|crispy}}
+        <button type="submit"> Save </button>
+    </form> 
+{%endblock%}

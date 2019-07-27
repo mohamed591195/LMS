@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{%load courses_tags %}
+
+{%block title%}
+    listing {{courses.count}} course
+{%endblock%}
+
+
+{%block body%}
+    {%for course in courses%}
+    <div class='mid'>
+    <h4><a href="#">{{course.title}}</a></h4>
+       
+            <p>
+                <ul class="options">
+                        {%if course.creator == user%}
+                    <li><a href="{%url 'course_update_view' course.slug%}"> Edit </a></li>
+                    <li><a href="{%url 'course_delete_view' course.slug%}"> Delete </a></li>
+                        {%elif user in course.instructors.all%}
+                    <li><a href="{%url 'course_modules_create_view' course.id %}"> Edit modules </a></li>
+                    <li><a href="{%url 'course_assignments_create_view' course.slug %}"> Edit Assignments </a></li>
+                            {%if course.modules.count > 0 %}
+                    <li><a href="{%url 'course_module_contents_view' course.modules.first.slug %}"> Edit Modules Contents </a></li>
+                            {%endif%}
+                        {%endif%}
+                 </ul>
+                 <div class="clear"></div>      
+            </p>
+       
+    </div>
+    {%empty%}
+    
+        {% if user|is_instructor%}
+             There No Courses Yet, Or you have not enrolled in any course as instructor yet
+            <br>
+            <span>Only admins can create new courses</span>
+        {%else%}
+            There No Courses Yet
+        {%endif%}
+
+    {%endfor%}
+
+    {% if user|is_admin%}
+        <button><a href="{% url 'course_create_view'%}">Create a New Course</a></button>
+    {%endif%}
+{%endblock%}

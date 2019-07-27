@@ -1,0 +1,38 @@
+{%extends 'base.html'%}
+{%load crispy_forms_tags%}
+{%load courses_tags%}
+{%block tilte%}
+    Users management
+{%endblock%}
+
+{%block body%}
+ <form method="POST" action="">
+     {%csrf_token%}
+     {{form|crispy}}
+ </form>
+{%for user in users%}
+    <h4>{{user.get_full_name}} </h4> 
+    <q> <span> name </span>: {{user.get_full_name}} ,    
+           <span> username </span>: {{user.username}} ,   
+            <span>email </span>: {{user.email}},
+            <span>Priviledge: </span> {%if user|is_instructor%} Instructor {%else%} Student {%endif%} </q>
+            <br>
+            <button><a href="{%url 'delete_user_view' user.id%}"> Delete</a></button>
+           
+            <form method="POST" action="{%url 'instructor_privilege_view' user.id%}">
+                {%csrf_token%}
+                    {% if user|is_instructor %}
+                    <button>Remove Privilege</button>
+                    {%else%}
+                    <button> Promote to Instructor</button>
+                    {%endif%}
+            </form>
+            
+            
+            
+            
+    
+{%empty%}
+<h2>there no users to manage yet</h2>
+{%endfor%}
+{%endblock%}

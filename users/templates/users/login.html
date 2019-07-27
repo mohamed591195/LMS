@@ -1,0 +1,14 @@
+{%extends 'base.html'%}
+{%load crispy_forms_tags%}
+{%block body%}
+<form method="POST" action="{%url 'login_view' %}">
+    {%csrf_token%}
+    {{form|crispy}}
+    <input type='hidden' name="next" value="{{next}}">
+    <button type="submit"> Login </button>
+</form>
+<div class="med">
+    <h5>forget your password ??</h5>
+    <button><a href="{%url 'pass_reset_view'%}">Reset my password</a></button>
+</div>
+{%endblock%}

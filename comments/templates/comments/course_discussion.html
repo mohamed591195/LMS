@@ -1,0 +1,73 @@
+{%extends 'base.html'%}
+{%load crispy_forms_tags%}
+{%load comment_tags%}
+{%block title%}
+    {{course}} Discussion
+{%endblock%}
+
+{%block body%}
+    <h2>{{course}} Discussion</h2>
+    <a href="{%url 'comments:create_comment_view_voted' course.slug True%}">Sort By most Voted </a> ||
+    <a href="{%url 'comments:create_comment_view_latest' course.slug True%}"> Sort By Latest</a>
+        <form method="POST" action="{% url 'comments:create_comment_view' course.slug %}">
+            {%csrf_token%}
+            {{form|crispy}}
+            <input type="hidden" value="{{course.id}}" name="course_id">
+        </form>
+   <div style="text-align: left; width:40%; margin: auto">
+    {% for comment in comments %}
+        {{comment.user.get_full_name}} :::
+       {{comment.created_at}}
+        <p>{{comment.comment}}</p> 
+        <button id='vote' data-id={{comment.id}} data-counter='comment_{{forloop.counter}}' onclick="vote(this)" >
+           {%if user|is_voted:comment %} Remove Vote {%else%} Vote Up {%endif%}</button>
+        <span id='comment_{{forloop.counter}}'> total_votes: {{comment.votes.all.count}}</span>
+        <div class="replies">
+        {%if comment.replies.all %}
+            {% for r in comment.replies.all %}
+            {{r.user.get_full_name}} :::
+            {{r.created_at}}
+             <p>{{r.comment}}</p>
+                
+            {%endfor%}
+        {%endif%}
+        </div>
+            <form class='reply_form' method="POST" action="{% url 'comments:create_comment_view' course.slug %}">
+                {%csrf_token%}
+                 {% for field in form%}
+                    reply: {{field}}
+                {%endfor%}
+                <input type="hidden" value="{{comment.id}}" name="comment_id">
+            </form>
+        
+    {%empty%}
+        <h2> is no comments yet, leave a Note or Question </h2>
+    {%endfor%}
+    </div>
+    
+{%endblock%}
+
+{%block jquery%}
+<script>
+    function vote(element){
+        id = element.getAttribute('data-counter')
+
+        $.ajax({
+            type: 'POST', 
+         url : "{%url 'comments:vote_comment_view' %}",
+        data : {
+            comment_id : element.getAttribute('data-id'),
+
+        },
+        beforeSend: function(request){
+            request.setRequestHeader('X-CSRFToken', '{{csrf_token}}')
+        }, 
+        success: function(data){
+          
+            element.innerHTML = data.action;
+            var d = document.querySelector('#' + id).innerHTML = 'total votes: ' + data.votes
+        }  
+    })
+}
+</script>
+{%endblock%}
