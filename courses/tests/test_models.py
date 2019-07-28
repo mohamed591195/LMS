@@ -53,11 +53,11 @@ class CourseModelTest(TestCase):
                          slug='first_course', 
                          overview='overview', 
                          creator=self.user,
-                         instructors=[self.user],
-                         students=[self.user],
                          subject=self.subject,
                          grade=50)
         course1.save()
+        course1.instructors.add(self.user)
+        course1.students.add(self.user) 
 
         self.assertIsNotNone(course1)
         f_course = Course.objects.first()
@@ -67,11 +67,12 @@ class CourseModelTest(TestCase):
                          slug='second_course',
                          overview='overview',
                          creator=self.user,
-                         instructors=[self.user],
-                         students=[self.user],
                          subject=self.subject,
                          grade=200)
+        course2.save()
+        course2.instructors.add(self.user)
+        course2.students.add(self.user)
 
         courses = Course.objects.all()
-        self.assertEqual(courses.count(), )
+        self.assertEqual(courses.count(), 2)
 
