@@ -153,3 +153,14 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+if 'DJANGO_DEBUG_FALSE' in os.envrion:
+    DEBUG = False
+    SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+    ALLOWED_HOSTS = [os.environ.get('SITE_NAME')]
+
+else:
+    DEBUG = True
+    SECRET_KEY = 'insecure-key-for-dev'
+    ALLOWED_HOSTS = []
+
