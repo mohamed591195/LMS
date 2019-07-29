@@ -7,7 +7,7 @@
   
  3) run this command to start the project by dev server
  
-   `` python manage.py runserver `` 
+    `` python manage.py runserver `` 
    
  4) you can access it locally from ``localhost:8000`` or ``127.0.0.1:8000``
  
