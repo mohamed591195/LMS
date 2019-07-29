@@ -18,10 +18,10 @@
  ### the site has four different types of users
  1) **superuser**\
     who wil have access to the panel of the site and have all permissions
- 2) ** site admins **\
+ 2) ** site admins**\
     these will be a normal users with admin privilege, the will belong to ``Admins`` group which gives them their privileges
    
- 3) **Instructors **\
+ 3) **Instructors**\
     one of the admins responsibility is to add instructors and instructors is just a normal user with instructors privileges\
     they belong to ``Instructors`` group 
     
