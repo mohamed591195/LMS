@@ -73,6 +73,13 @@ class CourseModelTest(TestCase):
         course2.instructors.add(self.user)
         course2.students.add(self.user)
 
+        s_course = Course.objects.all()[1]
+
         courses = Course.objects.all()
         self.assertEqual(courses.count(), 2)
+
+        self.assertEqual(f_course.slug, course1.slug)
+        self.assertEqual(s_course.title, course2.title)
+
+        
 
