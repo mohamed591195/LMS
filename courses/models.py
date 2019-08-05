@@ -105,6 +105,8 @@ class ItemBase(models.Model):
 
     def render(self):
         return render_to_string(f'courses/view/{self._meta.model_name}.html', {'item': self})
+
+        
     def __str__(self):
         return self.title
 
